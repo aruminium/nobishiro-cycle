@@ -32,46 +32,33 @@
     #reviewButton:hover { background-color: #6bcdac; box-shadow: 0 6px 12px var(--green-shadow); }
     /* --- Review Summary --- */
     #review-summary-container { display: none; margin-top: 2rem; padding: 25px; background-color: var(--review-bg); border: 1px solid var(--review-border); border-radius: 15px; box-shadow: 0 4px 10px rgba(251, 220, 142, 0.2); color: var(--textarea-text-color); } .review-section { margin-bottom: 20px; } .review-section:last-child { margin-bottom: 0; } .review-section-title { font-size: 1.3rem; font-weight: 500; color: var(--text-color); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px dashed var(--accent-color); display: flex; align-items: center; gap: 8px; } .review-content { font-size: 0.95rem; line-height: 1.7; white-space: pre-wrap; word-wrap: break-word; background-color: rgba(255, 255, 255, 0.5); padding: 10px; border-radius: 8px; border: 1px solid rgba(238, 125, 155, 0.1); } .review-content.asis-item { margin-bottom: 10px; border-left: 3px solid var(--accent-color); padding-left: 15px; } .review-content.asis-item strong { display: block; font-weight: 500; margin-bottom: 5px; color: var(--text-color); opacity: 0.9; } .review-content.placeholder-text { color: var(--placeholder-color); font-style: italic; }
-
     /* --- Generate Image Button Wrapper --- */
-    #generate-image-btn-wrapper {
-        display: none; /* Hidden by default */
+    #generate-image-btn-wrapper { display: none; text-align: center; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+    #generate-image-btn { -webkit-appearance: none; -moz-appearance: none; appearance: none; padding: 10px 20px; color: white; border: none; border-radius: 30px; font-family: 'Zen Maru Gothic', sans-serif; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; touch-action: manipulation; background-color: var(--blue-accent); box-shadow: 0 4px 8px rgba(125, 185, 238, 0.3); }
+    #generate-image-btn:hover { background-color: #6baae0; box-shadow: 0 6px 12px rgba(125, 185, 238, 0.4); transform: translateY(-2px); }
+    #generate-image-btn:disabled { background-color: #aaa; cursor: not-allowed; transform: none; box-shadow: none; color: #eee; }
+    /* --- Image Output --- */
+    #review-image-container {
+        display: none;
         text-align: center;
         margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        /* === 画像表示エリアの幅を制限し中央揃え === */
+        max-width: 600px; /* この値を調整してお好みのサイズに */
+        margin-left: auto;
+        margin-right: auto;
+        /* ==================================== */
     }
-    /* Style for the generate button itself */
-    #generate-image-btn {
-        /* Base button styles (Replicating .check-actions button) */
-        -webkit-appearance: none; -moz-appearance: none; appearance: none;
-        padding: 10px 20px;
-        color: white; /* Text color */
-        border: none;
-        border-radius: 30px;
-        font-family: 'Zen Maru Gothic', sans-serif;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: inline-flex; /* Ensure icon and text align */
-        align-items: center;
-        gap: 8px;
-        touch-action: manipulation;
-        /* Specific styles for generate button */
-        background-color: var(--blue-accent); /* Blue background */
-        box-shadow: 0 4px 8px rgba(125, 185, 238, 0.3); /* Blue shadow */
+    #review-image {
+        max-width: 100%; /* コンテナに合わせて縮小 */
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        vertical-align: middle; /* 画像下の隙間対策 */
     }
-    #generate-image-btn:hover {
-        background-color: #6baae0; /* Darker blue on hover */
-        box-shadow: 0 6px 12px rgba(125, 185, 238, 0.4);
-        transform: translateY(-2px);
-    }
-    #generate-image-btn:disabled {
-        background-color: #aaa; cursor: not-allowed; transform: none; box-shadow: none; color: #eee;
-    }
-
-    /* --- Image Output --- */
-    #review-image-container { display: none; text-align: center; margin-top: 1.5rem; background-color: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    #review-image { max-width: 100%; border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 1rem; }
     #review-image-container p { font-size: 0.9rem; margin-top: 1rem; color: var(--text-color); opacity: 0.9; line-height: 1.5; }
     /* Container for only the Tweet button */
     .output-actions { text-align: center; margin-top: 1.5rem; }
@@ -89,7 +76,7 @@
     #capture-temp-container .review-content.placeholder-text { color: #999 !important; font-style: italic !important; }
 
     /* --- Responsive Styles --- */
-    @media (max-width: 768px) { body { padding: 15px; padding-bottom: 160px; } /* ... other responsive styles ... */ #capture-temp-container { width: 90% !important; padding: 20px !important; } #capture-temp-container .review-section-title { font-size: 1.2rem !important; } #capture-temp-container .review-content { font-size: 0.9rem !important; } }
+    @media (max-width: 768px) { body { padding: 15px; padding-bottom: 160px; } /* ... other responsive styles ... */ #capture-temp-container { width: 90% !important; padding: 20px !important; } #capture-temp-container .review-section-title { font-size: 1.2rem !important; } #capture-temp-container .review-content { font-size: 0.9rem !important; } #review-image-container { max-width: 90%; } /* Allow image container to shrink */ }
     @media (max-width: 480px) { body { padding-bottom: 200px; } /* ... other responsive styles ... */ .fab span { display: none; } .fab { min-width: 40px; width: 40px; height: 40px; border-radius: 50%; padding: 0; } .notification { width: calc(100% - 30px); left: 15px; right: 15px; text-align: center; bottom: 210px; } }
 </style>
 </head>
@@ -154,7 +141,7 @@
 <!-- External Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-<!-- Main Application Logic -->
+<!-- Main Application Logic (unchanged from ver6.6) -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     // --- Element References ---
