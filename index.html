@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -18,37 +17,39 @@
       --blue-accent: #7db9ee;
       --error-color: #ee7d7d;
     }
-    
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
+
     body {
       font-family: 'Zen Maru Gothic', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
       line-height: 1.6;
       padding: 20px;
+      /* Smooth scroll for tab navigation */
+      scroll-behavior: smooth;
     }
-    
+
     .container {
       max-width: 1000px;
       margin: 0 auto;
     }
-    
+
     .header {
       text-align: center;
       margin-bottom: 30px;
     }
-    
+
     .header h1 {
       font-size: 2.2rem;
       color: var(--text-color);
       margin-bottom: 10px;
     }
-    
+
     .header p {
       font-size: 1.1rem;
       color: var(--text-color);
@@ -56,7 +57,7 @@
       max-width: 600px;
       margin: 0 auto;
     }
-    
+
     /* Storage message */
     .storage-note {
       background-color: rgba(245, 170, 192, 0.1);
@@ -68,12 +69,13 @@
       font-size: 0.9rem;
       color: var(--text-color);
       text-align: center;
+      display: none; /* Initially hidden, shown by JS if needed */
     }
-    
+
     .storage-note p {
       margin: 5px 0;
     }
-    
+
     /* Tabs Navigation */
     .tabs-nav {
       display: flex;
@@ -82,7 +84,7 @@
       gap: 10px;
       margin-bottom: 30px;
     }
-    
+
     .tab-button {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -100,20 +102,21 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      touch-action: manipulation;
+      touch-action: manipulation; /* Improve touch responsiveness */
     }
-    
+
     .tab-button:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 8px var(--shadow-color);
     }
-    
+
     .tab-button.active {
       background-color: var(--accent-color);
       color: white;
       box-shadow: 0 4px 10px var(--shadow-color);
+      transform: translateY(0); /* Reset hover effect when active */
     }
-    
+
     /* Tab Content */
     .tab-content {
       background-color: var(--card-bg);
@@ -121,23 +124,23 @@
       padding: 30px;
       box-shadow: 0 8px 20px var(--shadow-color);
       margin-bottom: 40px;
-      min-height: 60vh;
+      min-height: 60vh; /* Ensure minimum height for content */
     }
-    
+
     .tab-panel {
-      display: none;
+      display: none; /* Hidden by default */
     }
-    
+
     .tab-panel.active {
       display: block;
-      animation: fadeIn 0.3s ease-out forwards;
+      animation: fadeIn 0.4s ease-out forwards; /* Slightly slower fade-in */
     }
-    
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
+
     .section-title {
       font-size: 1.8rem;
       color: var(--text-color);
@@ -146,7 +149,7 @@
       align-items: center;
       gap: 10px;
     }
-    
+
     .section-description {
       font-size: 1rem;
       color: var(--text-color);
@@ -154,14 +157,14 @@
       margin-bottom: 25px;
       max-width: 700px;
     }
-    
+
     /* Cards Grid for AS-IS section */
     .asis-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted minmax for better fit */
       gap: 20px;
     }
-    
+
     .card {
       background-color: var(--card-bg);
       border-radius: 15px;
@@ -169,33 +172,35 @@
       box-shadow: 0 4px 8px var(--shadow-color);
       transition: all 0.3s ease;
       border: 1px solid var(--border-color);
-      height: 100%;
+      height: 100%; /* Make cards in a row same height */
+      display: flex;          /* Use flexbox for content alignment */
+      flex-direction: column; /* Stack content vertically */
     }
-    
+
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 15px var(--shadow-color);
     }
-    
+
     .tobe-card {
       background-color: var(--center-bg);
       border-color: var(--accent-color);
     }
-    
+
     .card-title {
       font-size: 1.2rem;
       font-weight: 500;
       margin-bottom: 8px;
       color: var(--text-color);
     }
-    
+
     .card-subtitle {
       font-size: 0.95rem;
       color: var(--text-color);
       opacity: 0.8;
       margin-bottom: 15px;
     }
-    
+
     textarea {
       width: 100%;
       min-height: 150px;
@@ -207,21 +212,22 @@
       color: #555;
       font-size: 0.95rem;
       transition: all 0.3s ease;
+      flex-grow: 1; /* Allow textarea to grow within flex container */
     }
-    
+
     textarea:focus {
       outline: none;
       border-color: var(--accent-color);
       box-shadow: 0 0 0 3px var(--shadow-color);
     }
-    
+
     /* Navigation buttons */
     .tab-navigation {
       display: flex;
       justify-content: space-between;
       margin-top: 30px;
     }
-    
+
     .nav-button {
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -239,34 +245,36 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      touch-action: manipulation;
+      touch-action: manipulation; /* Improve touch responsiveness */
     }
-    
+
     .nav-button:hover {
       background-color: #6baae0;
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(125, 185, 238, 0.4);
     }
-    
+
     .nav-button.prev {
-      background-color: #999;
+      background-color: #aaa; /* Slightly lighter gray */
+      box-shadow: 0 4px 8px rgba(170, 170, 170, 0.3);
     }
-    
+
     .nav-button.prev:hover {
-      background-color: #777;
+      background-color: #888;
+      box-shadow: 0 6px 12px rgba(136, 136, 136, 0.4);
     }
-    
+
     .nav-button.invisible {
-      visibility: hidden;
+      visibility: hidden; /* Keep space but hide */
     }
-    
+
     /* Progress bar */
     .progress-container {
       margin: 0 auto 30px;
       width: 100%;
       max-width: 800px;
     }
-    
+
     .progress-bar {
       width: 100%;
       height: 8px;
@@ -274,14 +282,14 @@
       border-radius: 4px;
       overflow: hidden;
     }
-    
+
     .progress-fill {
       height: 100%;
       background-color: var(--accent-color);
-      width: 0%;
+      width: 0%; /* Initial width */
       transition: width 0.5s ease;
     }
-    
+
     .progress-labels {
       display: flex;
       justify-content: space-between;
@@ -290,289 +298,656 @@
       color: var(--text-color);
       opacity: 0.8;
     }
-    
-    /* Save Button */
+
+    /* Save Button - Adjusted styles */
     .save-button {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 60px;
-      height: 60px;
+      bottom: 20px; /* Adjusted position */
+      right: 20px;  /* Adjusted position */
+      padding: 10px 20px; /* Adjusted padding */
       background-color: var(--accent-color);
       color: white;
       border: none;
-      border-radius: 50%;
-      font-size: 24px;
+      border-radius: 30px; /* Match nav buttons */
+      font-family: 'Zen Maru Gothic', sans-serif; /* Consistent font */
+      font-size: 1rem;    /* Adjusted font size */
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 8px; /* Add gap for icon */
       cursor: pointer;
       box-shadow: 0 4px 10px var(--shadow-color);
       transition: all 0.3s ease;
       z-index: 100;
-      touch-action: manipulation;
+      touch-action: manipulation; /* Improve touch responsiveness */
+      width: auto; /* Auto width based on content */
+      min-width: 100px; /* Minimum width */
+      height: auto; /* Auto height based on content */
     }
-    
+
     .save-button:hover {
-      transform: scale(1.1);
+      transform: translateY(-2px) scale(1.05); /* Combined hover effect */
+      box-shadow: 0 6px 12px var(--shadow-color);
     }
-    
+
     /* Notification */
     .notification {
       position: fixed;
-      bottom: 100px;
-      right: 30px;
+      bottom: 80px; /* Position above save button */
+      right: 20px;
       background-color: var(--accent-color);
       color: white;
       padding: 12px 20px;
       border-radius: 8px;
       font-size: 0.9rem;
       box-shadow: 0 4px 10px var(--shadow-color);
-      transform: translateY(100px);
+      transform: translateY(100px); /* Start off-screen */
       opacity: 0;
-      transition: all 0.5s ease;
-      z-index: 100;
+      transition: transform 0.4s ease-out, opacity 0.4s ease-out; /* Smoother transition */
+      z-index: 99; /* Below save button if overlapping */
+      pointer-events: none; /* Prevent interaction */
     }
-    
+
     .notification.show {
       transform: translateY(0);
       opacity: 1;
     }
-    
+
+    /* Image Generation Section */
+    #generate-image-btn {
+      padding: 10px 20px;
+      background-color: var(--blue-accent);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(125, 185, 238, 0.3);
+      transition: all 0.3s ease;
+      display: inline-block; /* Changed to inline-block */
+      margin-bottom: 15px; /* Added margin */
+    }
+    #generate-image-btn:hover {
+       background-color: #6baae0;
+       transform: translateY(-2px);
+       box-shadow: 0 6px 12px rgba(125, 185, 238, 0.4);
+    }
+
+    #review-image-container {
+      display: none;
+      text-align: center;
+      margin-top: 1.5rem;
+      background-color: #fff; /* Add background for better contrast */
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    #review-image {
+      max-width: 100%;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-bottom: 1rem; /* Add margin below image */
+    }
+
+    #review-image-container p {
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      color: var(--text-color); /* Consistent text color */
+      opacity: 0.9;
+    }
+
+    #tweet-btn {
+      display: inline-block;
+      margin-top: 1rem; /* Add margin above tweet button */
+      padding: 10px 20px; /* Match other buttons */
+      background-color: #1DA1F2;
+      color: white;
+      border-radius: 30px; /* Match other buttons */
+      text-decoration: none;
+      font-size: 1rem; /* Match other buttons */
+      font-family: 'Zen Maru Gothic', sans-serif; /* Consistent font */
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3);
+    }
+    #tweet-btn:hover {
+        background-color: #0c85d0;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(29, 161, 242, 0.4);
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
-      .asis-grid {
-        grid-template-columns: 1fr;
+      body {
+        padding: 15px;
       }
-      
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      .header p {
+        font-size: 1rem;
+      }
+      .asis-grid {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+      }
       .section-title {
         font-size: 1.5rem;
       }
-      
       .tab-button {
         font-size: 0.9rem;
         padding: 10px 15px;
       }
-      
       .tab-content {
         padding: 20px;
       }
+      .save-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        gap: 5px;
+        right: 15px;
+        bottom: 15px;
+      }
+      .notification {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+        right: 15px;
+        bottom: 70px; /* Adjust position relative to save button */
+      }
+       #generate-image-btn, #tweet-btn, .nav-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+       }
     }
-  </style>
+     @media (max-width: 480px) {
+       .header h1 {
+         font-size: 1.6rem;
+       }
+       .tab-button {
+         font-size: 0.85rem;
+         padding: 8px 12px;
+       }
+       .nav-button span { /* Hide text on very small screens if needed */
+         /* display: none; */
+       }
+       .save-button span {
+          /* display: none; Hide text label */
+       }
+       .save-button {
+         min-width: 45px; /* Make it more like a fab */
+         width: 45px;
+         height: 45px;
+         padding: 0;
+         border-radius: 50%;
+       }
+        .notification {
+            width: calc(100% - 30px); /* Full width notification */
+            left: 15px;
+            right: 15px;
+            text-align: center;
+        }
+     }
+</style>
 </head>
 <body>
-<div class="container" style="position: fixed; bottom: 24px; right: 24px; z-index: 1000;">
-<div class="header">
-<h1>🌀 あるみ式のびしろサイクル</h1>
-<p>自己分析と行動設計のためのサイクル思考フレームワーク</p>
-</div>
-<div class="storage-note" style="display: none;">
-<p>⚠️ ローカルストレージが使用できません。データ保存機能は限定的に動作します。</p>
-<p>※ブラウザを更新するとデータが消去されます。</p>
-<p>完全な機能を使う場合はウェブサーバー上でご利用ください。</p>
-</div>
-<div class="progress-container">
-<div class="progress-bar">
-<div class="progress-fill" id="progressBar"></div>
-</div>
-<div class="progress-labels">
-<span>サイクル進行状況</span>
-<span id="progressText">0%</span>
-</div>
-</div>
-<!-- Tabs Navigation -->
-<div class="tabs-nav" id="tabsNav">
-<button class="tab-button active" data-tab="tobe">🌈 TO-BE</button>
-<button class="tab-button" data-tab="asis">🔍 AS-IS</button>
-<button class="tab-button" data-tab="rule">❌ RULE</button>
-<button class="tab-button" data-tab="perk">🧰 PERK</button>
-<button class="tab-button" data-tab="action">🛠 ACTION</button>
-<button class="tab-button" data-tab="check">✅ CHECK</button>
-</div>
-<!-- Tab Content -->
-<div class="tab-content">
-<!-- TO-BE Tab -->
-<div class="tab-panel active" id="tobe-panel">
-<h2 class="section-title">🌈 TO-BE（なりたい姿・理想の状態）</h2>
-<p class="section-description">ワクワクできる未来をイメージしましょう。あなたの目指したい状態・ありたい姿はどんなものですか？</p>
-<div class="card tobe-card">
-<h3 class="card-title">理想の状態を描く</h3>
-<p class="card-subtitle">目標ではなく、どんな風に生きていたいか、あり方を描いてみよう</p>
-<textarea data-section="tobe" id="tobe-input" placeholder="こんなふうに生きたい！どんな状態が理想？"></textarea>
-</div>
-<div class="tab-navigation">
-<button class="nav-button prev invisible">◀ 前へ</button>
-<button class="nav-button next" data-next="asis">次へ ▶</button>
-</div>
-</div>
-<!-- AS-IS Tab -->
-<div class="tab-panel" id="asis-panel">
-<h2 class="section-title">🔍 AS-IS（現状分析）</h2>
-<p class="section-description">現状を多角的に棚卸しましょう。自分自身や環境を客観的に見つめることで、次の一手が見えてきます。</p>
-<div class="asis-grid">
-<div class="card">
-<h3 class="card-title">「理想とのギャップ」</h3>
-<p class="card-subtitle">理想と比べて今の自分はどう？</p>
-<textarea data-section="asis" id="asis-gap" placeholder="理想と比べて、どこで引っかかってる？"></textarea>
-</div>
-<div class="card">
-<h3 class="card-title">「課題・つまずき」</h3>
-<p class="card-subtitle">最近しんどいこと・止まっていることは？</p>
-<textarea data-section="asis" id="asis-challenges" placeholder="どこでつまずいてる？何が難しい？"></textarea>
-</div>
-<div class="card">
-<h3 class="card-title">「感情・不安・焦り」</h3>
-<p class="card-subtitle">モヤモヤしてることは？</p>
-<textarea data-section="asis" id="asis-emotions" placeholder="なんとなく不安なこと、ぼんやりでもOKです"></textarea>
-</div>
-<div class="card">
-<h3 class="card-title">「外的な制約」</h3>
-<p class="card-subtitle">自分では動かせない環境要因って？</p>
-<textarea data-section="asis" id="asis-constraints" placeholder="周りの状況で変えられないことは？"></textarea>
-</div>
-<div class="card">
-<h3 class="card-title">「過去の影響・トラウマ」</h3>
-<p class="card-subtitle">昔の経験が今の行動に影響してる？</p>
-<textarea data-section="asis" id="asis-past" placeholder="過去の経験で今も影響してることある？"></textarea>
-</div>
-</div>
-<div class="tab-navigation">
-<button class="nav-button prev" data-prev="tobe">◀ 前へ</button>
-<button class="nav-button next" data-next="rule">次へ ▶</button>
-</div>
-</div>
-<!-- RULE Tab -->
-<div class="tab-panel" id="rule-panel">
-<h2 class="section-title">❌ RULE（やらないこと・避けたい方向）</h2>
-<p class="section-description">自分を守るための境界線を設定しましょう。「もうこれはやらない」と決めることで、効率的に前に進めます。</p>
-<div class="card">
-<h3 class="card-title">自分を守る設計</h3>
-<p class="card-subtitle">無理しないための"やらない宣言"を書こう</p>
-<textarea data-section="rule" id="rule-input" placeholder="これはもうやらない、避けたいことを書いてみよう"></textarea>
-</div>
-<div class="tab-navigation">
-<button class="nav-button prev" data-prev="asis">◀ 前へ</button>
-<button class="nav-button next" data-next="perk">次へ ▶</button>
-</div>
-</div>
-<!-- PERK Tab -->
-<div class="tab-panel" id="perk-panel">
-<h2 class="section-title">🧰 PERK（使える装備）</h2>
-<p class="section-description">今の自分が持つ強みやリソースを見つめましょう。既に手に入れたスキルや経験、人脈も大切な装備です。</p>
-<div class="card">
-<h3 class="card-title">自分の装備を見つめる</h3>
-<p class="card-subtitle">今のスキル・経験・知識を棚卸しする</p>
-<textarea data-section="perk" id="perk-input" placeholder="今の自分にある武器って？使えるスキルは？"></textarea>
-</div>
-<div class="tab-navigation">
-<button class="nav-button prev" data-prev="rule">◀ 前へ</button>
-<button class="nav-button next" data-next="action">次へ ▶</button>
-</div>
-</div>
-<!-- ACTION Tab -->
-<div class="tab-panel" id="action-panel">
-<h2 class="section-title">🛠 ACTION（手段・行動）</h2>
-<p class="section-description">理想に近づくための具体的な一歩を設計しましょう。TO-BEに近づくために、今の自分にできることは何でしょう？</p>
-<div class="card">
-<h3 class="card-title">次の一手を考える</h3>
-<p class="card-subtitle">理想に近づくために今できることは？</p>
-<textarea data-section="action" id="action-input" placeholder="具体的に何をする？いつまでに？どうやって？"></textarea>
-</div>
-<div class="tab-navigation">
-<button class="nav-button prev" data-prev="perk">◀ 前へ</button>
-<button class="nav-button next" data-next="check">次へ ▶</button>
-</div>
-</div>
-<!-- CHECK Tab -->
-<div class="tab-panel" id="check-panel">
-<h2 class="section-title">✅ CHECK（振り返り）</h2>
-<p class="section-description">行動の結果を振り返り、次のサイクルにつなげましょう。うまくいったこと、改善点、次に試したいことを整理します。</p>
-<div class="card">
-<h3 class="card-title">KPTで振り返る</h3>
-<p class="card-subtitle">Keep／Problem／Tryで次のサイクルにつなげよう</p>
-<textarea data-section="check" id="check-input" placeholder="よかったこと／改善点／次にやってみること"></textarea>
-</div>
-<div class="tab-navigation">
-<button class="nav-button prev" data-prev="action">◀ 前へ</button>
-<button class="nav-button next restart" data-next="tobe">サイクル再始動 🔄</button>
-</div>
-<div style="text-align:center; margin-top:2rem;">
-<button id="generate-image-btn" style="padding:0.6rem 1.2rem; background:#7db9ee; color:white; border:none; border-radius:20px; font-size:1rem;">画像にする</button>
-</div>
-<div id="review-image-container" style="display:none; text-align:center; margin-top:1.5rem;">
-<img alt="のびしろ記録" id="review-image" src="" style="max-width:100%; border:1px solid #ccc; border-radius:10px;"/>
-<p style="font-size:0.9rem; margin-top:1rem;">
-        📲 <strong>画像を長押しして保存してね！</strong><br/>
-        💻 PCの方は <strong>右クリック → 名前をつけて保存</strong> でもOK！
-      </p>
-<a href="#" id="tweet-btn" style="display:inline-block; padding:0.5rem 1rem; background:#1DA1F2; color:white; border-radius:20px; text-decoration:none;" target="_blank">
-        ツイートする
-      </a>
-</div>
-</div>
-</div>
-<button class="save-button" id="saveButton" style="background: #f5aac0; color: white; padding: 1rem 2rem; font-size: 1rem; border-radius: 40px; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.2); cursor: pointer; display: inline-block; width: auto; min-width: 150px; text-align: center;">💾</button>
-<div class="notification" id="saveNotification">保存しました！</div>
+<div class="container">
+    <div class="header">
+        <h1>🌀 あるみ式のびしろサイクル</h1>
+        <p>自己分析と行動設計のためのサイクル思考フレームワーク</p>
+    </div>
+
+    <div class="storage-note">
+        <p>⚠️ ローカルストレージが使用できません。データ保存機能は限定的に動作します。</p>
+        <p>※ブラウザを更新するとデータが消去されます。</p>
+        <p>完全な機能を使う場合はウェブサーバー上でご利用ください。</p>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-labels">
+            <span>サイクル進行状況</span>
+            <span id="progressText">0%</span>
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-nav" id="tabsNav">
+        <button class="tab-button active" data-tab="tobe">🌈 <span>TO-BE</span></button>
+        <button class="tab-button" data-tab="asis">🔍 <span>AS-IS</span></button>
+        <button class="tab-button" data-tab="rule">❌ <span>RULE</span></button>
+        <button class="tab-button" data-tab="perk">🧰 <span>PERK</span></button>
+        <button class="tab-button" data-tab="action">🛠 <span>ACTION</span></button>
+        <button class="tab-button" data-tab="check">✅ <span>CHECK</span></button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <!-- TO-BE Tab -->
+        <div class="tab-panel active" id="tobe-panel">
+            <h2 class="section-title">🌈 TO-BE（なりたい姿・理想の状態）</h2>
+            <p class="section-description">ワクワクできる未来をイメージしましょう。あなたの目指したい状態・ありたい姿はどんなものですか？</p>
+            <div class="card tobe-card">
+                <h3 class="card-title">理想の状態を描く</h3>
+                <p class="card-subtitle">目標ではなく、どんな風に生きていたいか、あり方を描いてみよう</p>
+                <textarea data-section="tobe" id="tobe-input" placeholder="こんなふうに生きたい！どんな状態が理想？"></textarea>
+            </div>
+            <div class="tab-navigation">
+                <button class="nav-button prev invisible">◀ <span>前へ</span></button>
+                <button class="nav-button next" data-next="asis"><span>次へ</span> ▶</button>
+            </div>
+        </div>
+
+        <!-- AS-IS Tab -->
+        <div class="tab-panel" id="asis-panel">
+            <h2 class="section-title">🔍 AS-IS（現状分析）</h2>
+            <p class="section-description">現状を多角的に棚卸しましょう。自分自身や環境を客観的に見つめることで、次の一手が見えてきます。</p>
+            <div class="asis-grid">
+                <div class="card">
+                    <h3 class="card-title">「理想とのギャップ」</h3>
+                    <p class="card-subtitle">理想と比べて今の自分はどう？</p>
+                    <textarea data-section="asis" id="asis-gap" placeholder="理想と比べて、どこで引っかかってる？"></textarea>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">「課題・つまずき」</h3>
+                    <p class="card-subtitle">最近しんどいこと・止まっていることは？</p>
+                    <textarea data-section="asis" id="asis-challenges" placeholder="どこでつまずいてる？何が難しい？"></textarea>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">「感情・不安・焦り」</h3>
+                    <p class="card-subtitle">モヤモヤしてることは？</p>
+                    <textarea data-section="asis" id="asis-emotions" placeholder="なんとなく不安なこと、ぼんやりでもOKです"></textarea>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">「外的な制約」</h3>
+                    <p class="card-subtitle">自分では動かせない環境要因って？</p>
+                    <textarea data-section="asis" id="asis-constraints" placeholder="周りの状況で変えられないことは？"></textarea>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">「過去の影響・トラウマ」</h3>
+                    <p class="card-subtitle">昔の経験が今の行動に影響してる？</p>
+                    <textarea data-section="asis" id="asis-past" placeholder="過去の経験で今も影響してることある？"></textarea>
+                </div>
+            </div>
+            <div class="tab-navigation">
+                <button class="nav-button prev" data-prev="tobe">◀ <span>前へ</span></button>
+                <button class="nav-button next" data-next="rule"><span>次へ</span> ▶</button>
+            </div>
+        </div>
+
+        <!-- RULE Tab -->
+        <div class="tab-panel" id="rule-panel">
+            <h2 class="section-title">❌ RULE（やらないこと・避けたい方向）</h2>
+            <p class="section-description">自分を守るための境界線を設定しましょう。「もうこれはやらない」と決めることで、効率的に前に進めます。</p>
+            <div class="card">
+                <h3 class="card-title">自分を守る設計</h3>
+                <p class="card-subtitle">無理しないための"やらない宣言"を書こう</p>
+                <textarea data-section="rule" id="rule-input" placeholder="これはもうやらない、避けたいことを書いてみよう"></textarea>
+            </div>
+            <div class="tab-navigation">
+                <button class="nav-button prev" data-prev="asis">◀ <span>前へ</span></button>
+                <button class="nav-button next" data-next="perk"><span>次へ</span> ▶</button>
+            </div>
+        </div>
+
+        <!-- PERK Tab -->
+        <div class="tab-panel" id="perk-panel">
+            <h2 class="section-title">🧰 PERK（使える装備）</h2>
+            <p class="section-description">今の自分が持つ強みやリソースを見つめましょう。既に手に入れたスキルや経験、人脈も大切な装備です。</p>
+            <div class="card">
+                <h3 class="card-title">自分の装備を見つめる</h3>
+                <p class="card-subtitle">今のスキル・経験・知識を棚卸しする</p>
+                <textarea data-section="perk" id="perk-input" placeholder="今の自分にある武器って？使えるスキルは？"></textarea>
+            </div>
+            <div class="tab-navigation">
+                <button class="nav-button prev" data-prev="rule">◀ <span>前へ</span></button>
+                <button class="nav-button next" data-next="action"><span>次へ</span> ▶</button>
+            </div>
+        </div>
+
+        <!-- ACTION Tab -->
+        <div class="tab-panel" id="action-panel">
+            <h2 class="section-title">🛠 ACTION（手段・行動）</h2>
+            <p class="section-description">理想に近づくための具体的な一歩を設計しましょう。TO-BEに近づくために、今の自分にできることは何でしょう？</p>
+            <div class="card">
+                <h3 class="card-title">次の一手を考える</h3>
+                <p class="card-subtitle">理想に近づくために今できることは？</p>
+                <textarea data-section="action" id="action-input" placeholder="具体的に何をする？いつまでに？どうやって？"></textarea>
+            </div>
+            <div class="tab-navigation">
+                <button class="nav-button prev" data-prev="perk">◀ <span>前へ</span></button>
+                <button class="nav-button next" data-next="check"><span>次へ</span> ▶</button>
+            </div>
+        </div>
+
+        <!-- CHECK Tab -->
+        <div class="tab-panel" id="check-panel">
+            <h2 class="section-title">✅ CHECK（振り返り）</h2>
+            <p class="section-description">行動の結果を振り返り、次のサイクルにつなげましょう。うまくいったこと、改善点、次に試したいことを整理します。</p>
+            <div class="card">
+                <h3 class="card-title">KPTで振り返る</h3>
+                <p class="card-subtitle">Keep／Problem／Tryで次のサイクルにつなげよう</p>
+                <textarea data-section="check" id="check-input" placeholder="よかったこと(Keep)／改善点(Problem)／次にやってみること(Try)"></textarea>
+            </div>
+
+            <div style="text-align:center; margin-top:2rem;">
+                <button id="generate-image-btn">この記録を画像にする</button>
+            </div>
+
+            <div id="review-image-container">
+                <img alt="のびしろ記録" id="review-image" src=""/>
+                 <p>
+                    📲 <strong>画像を長押しして保存してね！</strong><br/>
+                    💻 PCの方は <strong>右クリック → 名前をつけて画像を保存</strong> でもOK！
+                </p>
+                <a href="#" id="tweet-btn" target="_blank" rel="noopener noreferrer">
+                    ツイートする
+                </a>
+            </div>
+
+             <div class="tab-navigation" style="margin-top: 2rem;"> {/* Add margin top here */}
+                <button class="nav-button prev" data-prev="action">◀ <span>前へ</span></button>
+                <button class="nav-button next restart" data-next="tobe"><span>サイクル再始動</span> 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Button -->
+    <button class="save-button" id="saveButton">💾 <span>保存</span></button>
+
+    <!-- Save Notification -->
+    <div class="notification" id="saveNotification">保存しました！</div>
+
 </div>
 
-
-
+<!-- External Libraries -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<!-- Main Application Logic -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const saveButton = document.querySelector(".save-button");
-    const textareas = document.querySelectorAll("textarea");
+    // --- Element References ---
+    const tabsNav = document.getElementById('tabsNav');
+    const tabButtons = tabsNav.querySelectorAll('.tab-button');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    const textareas = document.querySelectorAll('textarea');
+    const saveButton = document.getElementById('saveButton');
+    const saveNotification = document.getElementById('saveNotification');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const storageNote = document.querySelector('.storage-note');
+    const generateBtn = document.getElementById('generate-image-btn');
+    const outputContainer = document.getElementById('review-image-container');
+    const outputImg = document.getElementById('review-image');
+    const tweetBtn = document.getElementById('tweet-btn');
+
+    // --- State Variables ---
+    const tabOrder = ['tobe', 'asis', 'rule', 'perk', 'action', 'check'];
+    let currentTabIndex = 0;
+    let isLocalStorageAvailable = true;
+    let saveTimeout; // For notification timer
+
+    // --- LocalStorage Functions ---
+    function checkLocalStorage() {
+      try {
+        const testKey = '__arumi_test__';
+        localStorage.setItem(testKey, testKey);
+        localStorage.removeItem(testKey);
+        isLocalStorageAvailable = true;
+        storageNote.style.display = 'none';
+        console.info('LocalStorage is available.');
+      } catch (e) {
+        isLocalStorageAvailable = false;
+        storageNote.style.display = 'block';
+        console.warn('LocalStorage is not available. Data will not be saved across sessions.');
+        // Optionally disable save button if storage is crucial
+        // if (saveButton) saveButton.disabled = true;
+      }
+    }
+
+    function getLocalStorageKey(textareaElement) {
+        const section = textareaElement.dataset.section;
+        const id = textareaElement.id;
+        if (section && id) {
+            return `arumi_${section}_${id}`;
+        }
+        console.warn('Textarea missing data-section or id:', textareaElement);
+        return null;
+    }
 
     function saveInputs() {
-      textareas.forEach((ta, index) => {
-        localStorage.setItem("arumi_input_" + index, ta.value);
+      if (!isLocalStorageAvailable) return;
+      let changed = false;
+      textareas.forEach(ta => {
+        const key = getLocalStorageKey(ta);
+        if (key) {
+          const currentValue = localStorage.getItem(key);
+          if (currentValue !== ta.value) {
+              localStorage.setItem(key, ta.value);
+              changed = true;
+          }
+        }
       });
+      // Only log if something actually changed to reduce console noise
+      if (changed) {
+          console.log('Inputs saved to localStorage.');
+      }
+      return changed; // Return whether any data was actually saved
     }
 
     function restoreInputs() {
-      textareas.forEach((ta, index) => {
-        const saved = localStorage.getItem("arumi_input_" + index);
-        if (saved) ta.value = saved;
+      if (!isLocalStorageAvailable) return;
+      textareas.forEach(ta => {
+        const key = getLocalStorageKey(ta);
+        if (key) {
+          const savedValue = localStorage.getItem(key);
+          if (savedValue !== null) {
+            ta.value = savedValue;
+          }
+        }
       });
+      console.log('Inputs restored from localStorage.');
     }
 
-    restoreInputs();
+    // --- UI Update Functions ---
+    function updateProgress() {
+      const progress = ((currentTabIndex + 1) / tabOrder.length) * 100;
+      progressBar.style.width = `${progress}%`;
+      progressText.textContent = `${Math.round(progress)}%`;
+    }
 
-    textareas.forEach((ta, index) => {
-      const key = "arumi_input_" + index;
-      ta.addEventListener("input", () => {
-        localStorage.setItem(key, ta.value);
+    function showTab(tabId) {
+      const targetIndex = tabOrder.indexOf(tabId);
+      if (targetIndex === -1) {
+          console.error(`Tab ID "${tabId}" not found in tabOrder.`);
+          return; // Exit if tabId is invalid
+      }
+
+      currentTabIndex = targetIndex;
+
+      // Update Tab Buttons
+      tabButtons.forEach((button, index) => {
+        if (index === currentTabIndex) {
+          button.classList.add('active');
+        } else {
+          button.classList.remove('active');
+        }
+      });
+
+      // Update Tab Panels
+      tabPanels.forEach((panel, index) => {
+         const panelId = tabOrder[index];
+         if (panel.id === `${panelId}-panel`) {
+            if (index === currentTabIndex) {
+                panel.classList.add('active');
+            } else {
+                panel.classList.remove('active');
+            }
+         }
+      });
+
+      // Update Progress Bar
+      updateProgress();
+
+      // Hide image generation area when switching tabs
+      outputContainer.style.display = "none";
+      outputImg.src = "";
+      generateBtn.textContent = 'この記録を画像にする'; // Reset button text
+    }
+
+    function showSaveNotification() {
+        saveNotification.classList.add('show');
+        // Clear previous timer if it exists
+        if (saveTimeout) clearTimeout(saveTimeout);
+        // Set new timer to hide notification
+        saveTimeout = setTimeout(() => {
+          saveNotification.classList.remove('show');
+        }, 2000); // Show for 2 seconds
+    }
+
+    // --- Event Listeners ---
+
+    // Tab Button Clicks
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const tabId = button.dataset.tab;
+        if (tabId) {
+            showTab(tabId);
+        } else {
+            console.error('Tab button missing data-tab attribute:', button);
+        }
       });
     });
 
+    // Navigation Button Clicks (Next/Prev)
+    document.querySelectorAll('.nav-button').forEach(button => {
+      button.addEventListener('click', () => {
+        let nextTabId = null;
+        const isNext = button.classList.contains('next');
+        const isPrev = button.classList.contains('prev');
+        const isRestart = button.classList.contains('restart');
+
+        if (isNext && !isRestart) {
+          if (currentTabIndex < tabOrder.length - 1) {
+            nextTabId = tabOrder[currentTabIndex + 1];
+          }
+        } else if (isPrev) {
+          if (currentTabIndex > 0) {
+            nextTabId = tabOrder[currentTabIndex - 1];
+          }
+        } else if (isRestart) {
+            nextTabId = tabOrder[0]; // Go to the first tab
+        }
+
+        if (nextTabId) {
+          showTab(nextTabId);
+          // Scroll to the top of the container smoothly
+          const containerTop = document.querySelector('.container').offsetTop;
+           window.scrollTo({ top: containerTop - 20, behavior: 'smooth' }); // Offset by 20px
+        }
+      });
+    });
+
+    // Save Button Click
     if (saveButton) {
-      saveButton.addEventListener("click", () => {
-        saveInputs();
-        saveButton.classList.add("saved-animation");
-        setTimeout(() => saveButton.classList.remove("saved-animation"), 1000);
+      saveButton.addEventListener('click', () => {
+        const saved = saveInputs(); // Save current inputs
+        if (saved && isLocalStorageAvailable) { // Only show notification if something was saved and storage works
+             showSaveNotification();
+        } else if (!isLocalStorageAvailable) {
+            alert('ローカルストレージが利用できないため、保存できませんでした。');
+        }
+        // No notification if nothing changed
       });
+    } else {
+        console.error('Save button element not found.');
     }
 
-    const generateBtn = document.getElementById("generate-image-btn");
-    const outputContainer = document.getElementById("review-image-container");
-    const outputImg = document.getElementById("review-image");
-    const tweetBtn = document.getElementById("tweet-btn");
-
-    generateBtn.addEventListener("click", () => {
-      saveInputs();
-      html2canvas(document.body, {
-        windowWidth: document.body.scrollWidth,
-        scale: 2
-      }).then(canvas => {
-        const dataURL = canvas.toDataURL("image/png");
-        outputImg.src = dataURL;
-        outputContainer.style.display = "block";
-        tweetBtn.href = "https://twitter.com/intent/tweet?hashtags=あるみ式のびしろサイクル&text=" + encodeURIComponent("のびしろ記録、可視化してみた！");
-      });
+    // Textarea Auto-save on Input (throttled)
+    let debounceTimer;
+    textareas.forEach(ta => {
+        ta.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            // Save after 500ms of inactivity
+            debounceTimer = setTimeout(() => {
+                saveInputs();
+            }, 500);
+        });
     });
+
+    // Generate Image Button Click
+    if (generateBtn) {
+        generateBtn.addEventListener('click', () => {
+            // Ensure latest content is saved before generating image
+            saveInputs();
+
+            const currentActivePanel = document.querySelector('.tab-panel.active');
+
+            if (currentActivePanel && html2canvas) {
+                 // Show a temporary loading state? (Optional)
+                 generateBtn.textContent = '画像生成中...';
+                 generateBtn.disabled = true;
+
+                 // html2canvas options
+                 const options = {
+                    scale: window.devicePixelRatio || 2, // Use device pixel ratio for sharpness
+                    useCORS: true, // Allow cross-origin images (if any)
+                    backgroundColor: getComputedStyle(currentActivePanel).backgroundColor || '#ffffff', // Use panel background
+                    logging: false // Disable html2canvas console logs
+                 };
+
+                 // Delay slightly to allow UI update (loading state)
+                 setTimeout(() => {
+                     html2canvas(currentActivePanel, options).then(canvas => {
+                        const dataURL = canvas.toDataURL("image/png");
+                        outputImg.src = dataURL;
+                        outputContainer.style.display = "block"; // Show container
+
+                        // Prepare Tweet button
+                        const tweetText = "あるみ式のびしろサイクルで自己分析したよ！ #あるみ式のびしろサイクル";
+                        // Note: Twitter intent URLs don't directly support image uploads via URL.
+                        // Users need to save the image and upload manually.
+                        tweetBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+
+                        // Scroll to the generated image
+                        outputContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                        // Restore button state
+                        generateBtn.textContent = '画像を再生成';
+                        generateBtn.disabled = false;
+
+                     }).catch(error => {
+                        console.error('html2canvas failed:', error);
+                        alert('画像の生成に失敗しました。コンソールで詳細を確認してください。');
+                        // Restore button state on error
+                        generateBtn.textContent = '画像生成再試行';
+                        generateBtn.disabled = false;
+                     });
+                 }, 50); // 50ms delay
+
+            } else {
+                 if (!currentActivePanel) alert('画像生成の対象となるアクティブなタブが見つかりません。');
+                 if (!html2canvas) alert('画像生成ライブラリ(html2canvas)が読み込めていません。');
+                 // Restore button state if prerequisites fail
+                 generateBtn.textContent = '画像にする';
+                 generateBtn.disabled = false;
+            }
+        });
+    } else {
+         console.error('Generate image button element not found.');
+    }
+
+    // --- Initial Setup ---
+    checkLocalStorage(); // Check storage availability first
+    restoreInputs();     // Restore data if available
+    showTab(tabOrder[0]); // Show the initial tab ('tobe')
+
   });
 </script>
-</body></html>
+
+</body>
+</html>
