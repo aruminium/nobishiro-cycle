@@ -15,10 +15,13 @@
       --shadow-color: rgba(245, 170, 192, 0.3);
       --border-color: rgba(238, 125, 155, 0.2);
       --blue-accent: #7db9ee;
+      --green-accent: #7deebb;
+      --green-shadow: rgba(125, 238, 187, 0.3);
+      --review-bg: #fef9e7; /* Light yellow for review */
+      --review-border: #fbdc8e;
       --error-color: #ee7d7d;
     }
-
-    * {
+* {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -30,8 +33,10 @@
       color: var(--text-color);
       line-height: 1.6;
       padding: 20px;
-      /* Smooth scroll for tab navigation */
+      padding-bottom: 100px; /* Add padding for floating buttons */
       scroll-behavior: smooth;
+      /* Ensure body takes up at least viewport height for screenshot */
+      min-height: 100vh;
     }
 
     .container {
@@ -102,7 +107,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      touch-action: manipulation; /* Improve touch responsiveness */
+      touch-action: manipulation;
     }
 
     .tab-button:hover {
@@ -114,7 +119,7 @@
       background-color: var(--accent-color);
       color: white;
       box-shadow: 0 4px 10px var(--shadow-color);
-      transform: translateY(0); /* Reset hover effect when active */
+      transform: translateY(0);
     }
 
     /* Tab Content */
@@ -124,16 +129,16 @@
       padding: 30px;
       box-shadow: 0 8px 20px var(--shadow-color);
       margin-bottom: 40px;
-      min-height: 60vh; /* Ensure minimum height for content */
+      min-height: 60vh;
     }
 
     .tab-panel {
-      display: none; /* Hidden by default */
+      display: none;
     }
 
     .tab-panel.active {
       display: block;
-      animation: fadeIn 0.4s ease-out forwards; /* Slightly slower fade-in */
+      animation: fadeIn 0.4s ease-out forwards;
     }
 
     @keyframes fadeIn {
@@ -161,7 +166,7 @@
     /* Cards Grid for AS-IS section */
     .asis-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted minmax for better fit */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
     }
 
@@ -172,9 +177,9 @@
       box-shadow: 0 4px 8px var(--shadow-color);
       transition: all 0.3s ease;
       border: 1px solid var(--border-color);
-      height: 100%; /* Make cards in a row same height */
-      display: flex;          /* Use flexbox for content alignment */
-      flex-direction: column; /* Stack content vertically */
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
     .card:hover {
@@ -212,7 +217,7 @@
       color: #555;
       font-size: 0.95rem;
       transition: all 0.3s ease;
-      flex-grow: 1; /* Allow textarea to grow within flex container */
+      flex-grow: 1;
     }
 
     textarea:focus {
@@ -245,7 +250,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      touch-action: manipulation; /* Improve touch responsiveness */
+      touch-action: manipulation;
     }
 
     .nav-button:hover {
@@ -255,7 +260,7 @@
     }
 
     .nav-button.prev {
-      background-color: #aaa; /* Slightly lighter gray */
+      background-color: #aaa;
       box-shadow: 0 4px 8px rgba(170, 170, 170, 0.3);
     }
 
@@ -265,7 +270,7 @@
     }
 
     .nav-button.invisible {
-      visibility: hidden; /* Keep space but hide */
+      visibility: hidden;
     }
 
     /* Progress bar */
@@ -286,7 +291,7 @@
     .progress-fill {
       height: 100%;
       background-color: var(--accent-color);
-      width: 0%; /* Initial width */
+      width: 0%;
       transition: width 0.5s ease;
     }
 
@@ -299,44 +304,73 @@
       opacity: 0.8;
     }
 
-    /* Save Button - Adjusted styles */
-    .save-button {
+    /* Floating Action Buttons Area */
+    .fab-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 10px; /* Space between buttons */
+        z-index: 100;
+    }
+
+    .fab {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
-      position: fixed;
-      bottom: 20px; /* Adjusted position */
-      right: 20px;  /* Adjusted position */
-      padding: 10px 20px; /* Adjusted padding */
-      background-color: var(--accent-color);
+      padding: 10px 15px; /* Slightly smaller padding */
       color: white;
       border: none;
-      border-radius: 30px; /* Match nav buttons */
-      font-family: 'Zen Maru Gothic', sans-serif; /* Consistent font */
-      font-size: 1rem;    /* Adjusted font size */
+      border-radius: 30px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 0.9rem; /* Slightly smaller font */
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px; /* Add gap for icon */
+      gap: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 10px var(--shadow-color);
       transition: all 0.3s ease;
-      z-index: 100;
-      touch-action: manipulation; /* Improve touch responsiveness */
-      width: auto; /* Auto width based on content */
-      min-width: 100px; /* Minimum width */
-      height: auto; /* Auto height based on content */
+      width: auto;
+      min-width: 120px; /* Ensure text fits */
+      height: 40px; /* Fixed height */
+      text-align: center;
+      touch-action: manipulation;
     }
 
-    .save-button:hover {
-      transform: translateY(-2px) scale(1.05); /* Combined hover effect */
-      box-shadow: 0 6px 12px var(--shadow-color);
+    .fab:hover {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    /* Individual FAB styles */
+    .save-button-local {
+      background-color: var(--accent-color);
+      box-shadow: 0 4px 10px var(--shadow-color);
+    }
+    .save-button-local:hover { box-shadow: 0 6px 12px var(--shadow-color); }
+
+    .download-button {
+      background-color: var(--blue-accent);
+      box-shadow: 0 4px 10px rgba(125, 185, 238, 0.3);
+    }
+    .download-button:hover { box-shadow: 0 6px 12px rgba(125, 185, 238, 0.4); }
+
+    .upload-button {
+       background-color: var(--green-accent);
+       box-shadow: 0 4px 10px var(--green-shadow);
+    }
+    .upload-button:hover { box-shadow: 0 6px 12px var(--green-shadow); }
+
+
+    /* Hidden file input */
+    #fileInput {
+        display: none;
     }
 
     /* Notification */
     .notification {
       position: fixed;
-      bottom: 80px; /* Position above save button */
+      bottom: 150px; /* Adjust position above FABs */
       right: 20px;
       background-color: var(--accent-color);
       color: white;
@@ -344,152 +378,296 @@
       border-radius: 8px;
       font-size: 0.9rem;
       box-shadow: 0 4px 10px var(--shadow-color);
-      transform: translateY(100px); /* Start off-screen */
+      transform: translateY(150px); /* Start further down */
       opacity: 0;
-      transition: transform 0.4s ease-out, opacity 0.4s ease-out; /* Smoother transition */
-      z-index: 99; /* Below save button if overlapping */
-      pointer-events: none; /* Prevent interaction */
+      transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+      z-index: 99;
+      pointer-events: none;
     }
+    .notification.upload-success {
+        background-color: var(--green-accent);
+        color: #333; /* Darker text for green bg */
+        box-shadow: 0 4px 10px var(--green-shadow);
+    }
+    .notification.error {
+        background-color: var(--error-color);
+         box-shadow: 0 4px 10px rgba(238, 125, 125, 0.3);
+    }
+
 
     .notification.show {
       transform: translateY(0);
       opacity: 1;
     }
 
-    /* Image Generation Section */
-    #generate-image-btn {
+     /* Action buttons within Check tab */
+    .check-actions {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        justify-content: center;
+        gap: 15px; /* Space between buttons */
+        margin-top: 2rem;
+        margin-bottom: 1.5rem; /* Space before next section */
+    }
+    .check-actions button {
       padding: 10px 20px;
-      background-color: var(--blue-accent);
       color: white;
       border: none;
       border-radius: 30px;
       font-family: 'Zen Maru Gothic', sans-serif;
       font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(125, 185, 238, 0.3);
       transition: all 0.3s ease;
-      display: inline-block; /* Changed to inline-block */
-      margin-bottom: 15px; /* Added margin */
+      display: inline-flex; /* Use inline-flex */
+      align-items: center;
+      gap: 8px;
     }
-    #generate-image-btn:hover {
-       background-color: #6baae0;
+    .check-actions button:hover {
        transform: translateY(-2px);
+    }
+    #generate-image-btn {
+        background-color: var(--blue-accent);
+        box-shadow: 0 4px 8px rgba(125, 185, 238, 0.3);
+    }
+     #generate-image-btn:hover {
+       background-color: #6baae0;
        box-shadow: 0 6px 12px rgba(125, 185, 238, 0.4);
     }
+     #generate-image-btn:disabled { background-color: #aaa; cursor: not-allowed; transform: none; box-shadow: none; }
 
-    #review-image-container {
-      display: none;
-      text-align: center;
-      margin-top: 1.5rem;
-      background-color: #fff; /* Add background for better contrast */
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    #reviewButton { /* New Review Button Style */
+        background-color: var(--green-accent); /* Use green */
+        color: #333; /* Darker text for green */
+        box-shadow: 0 4px 8px var(--green-shadow);
     }
-
-    #review-image {
-      max-width: 100%;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      margin-bottom: 1rem; /* Add margin below image */
+     #reviewButton:hover {
+        background-color: #6bcdac; /* Darker green on hover */
+        box-shadow: 0 6px 12px var(--green-shadow);
     }
 
-    #review-image-container p {
-      font-size: 0.9rem;
-      margin-top: 1rem;
-      color: var(--text-color); /* Consistent text color */
-      opacity: 0.9;
+    /* Review Summary Container */
+    #review-summary-container {
+        display: none; /* Hidden by default */
+        margin-top: 2rem;
+        padding: 25px;
+        background-color: var(--review-bg);
+        border: 1px solid var(--review-border);
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(251, 220, 142, 0.2);
+        color: #555; /* Darker text for readability */
     }
-
-    #tweet-btn {
-      display: inline-block;
-      margin-top: 1rem; /* Add margin above tweet button */
-      padding: 10px 20px; /* Match other buttons */
-      background-color: #1DA1F2;
-      color: white;
-      border-radius: 30px; /* Match other buttons */
-      text-decoration: none;
-      font-size: 1rem; /* Match other buttons */
-      font-family: 'Zen Maru Gothic', sans-serif; /* Consistent font */
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3);
+    .review-section {
+        margin-bottom: 20px;
     }
-    #tweet-btn:hover {
-        background-color: #0c85d0;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(29, 161, 242, 0.4);
+    .review-section:last-child {
+        margin-bottom: 0;
     }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      body {
-        padding: 15px;
-      }
-      .header h1 {
-        font-size: 1.8rem;
-      }
-      .header p {
-        font-size: 1rem;
-      }
-      .asis-grid {
-        grid-template-columns: 1fr; /* Single column on smaller screens */
-      }
-      .section-title {
-        font-size: 1.5rem;
-      }
-      .tab-button {
-        font-size: 0.9rem;
-        padding: 10px 15px;
-      }
-      .tab-content {
-        padding: 20px;
-      }
-      .save-button {
-        font-size: 0.9rem;
-        padding: 8px 16px;
-        gap: 5px;
-        right: 15px;
-        bottom: 15px;
-      }
-      .notification {
-        font-size: 0.85rem;
-        padding: 10px 15px;
-        right: 15px;
-        bottom: 70px; /* Adjust position relative to save button */
-      }
-       #generate-image-btn, #tweet-btn, .nav-button {
-        font-size: 0.9rem;
-        padding: 8px 16px;
-       }
+    .review-section-title {
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: var(--text-color); /* Use main text color for title */
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px dashed var(--accent-color);
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
-     @media (max-width: 480px) {
-       .header h1 {
-         font-size: 1.6rem;
-       }
-       .tab-button {
-         font-size: 0.85rem;
-         padding: 8px 12px;
-       }
-       .nav-button span { /* Hide text on very small screens if needed */
-         /* display: none; */
-       }
-       .save-button span {
-          /* display: none; Hide text label */
-       }
-       .save-button {
-         min-width: 45px; /* Make it more like a fab */
-         width: 45px;
-         height: 45px;
-         padding: 0;
-         border-radius: 50%;
-       }
-        .notification {
-            width: calc(100% - 30px); /* Full width notification */
-            left: 15px;
-            right: 15px;
-            text-align: center;
-        }
+    .review-content {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        white-space: pre-wrap; /* Preserve line breaks and spaces */
+        word-wrap: break-word; /* Break long words */
+        background-color: rgba(255, 255, 255, 0.5); /* Slight white background */
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(238, 125, 155, 0.1);
+    }
+     .review-content.asis-item { /* Style for individual as-is items */
+        margin-bottom: 10px;
+        border-left: 3px solid var(--accent-color);
+        padding-left: 15px;
      }
+    .review-content.asis-item strong { /* Subtitle for as-is item */
+        display: block;
+        font-weight: 500;
+        margin-bottom: 5px;
+        color: var(--text-color);
+        opacity: 0.9;
+    }
+
+
+    #review-image-container { display: none; text-align: center; margin-top: 1.5rem; background-color: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    #review-image { max-width: 100%; border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 1rem; }
+    #review-image-container p { font-size: 0.9rem; margin-top: 1rem; color: var(--text-color); opacity: 0.9; line-height: 1.5; } /* Adjusted line-height */
+    #tweet-btn { display: inline-block; margin-top: 1rem; padding: 10px 20px; background-color: #1DA1F2; color: white; border-radius: 30px; text-decoration: none; font-size: 1rem; font-family: 'Zen Maru Gothic', sans-serif; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3); }
+    #tweet-btn:hover { background-color: #0c85d0; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(29, 161, 242, 0.4); }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        body { padding: 15px; padding-bottom: 120px; }
+        .header h1 { font-size: 1.8rem; } .header p { font-size: 1rem; }
+        .asis-grid { grid-template-columns: 1fr; }
+        .section-title { font-size: 1.5rem; }
+        .tab-button { font-size: 0.9rem; padding: 10px 15px; }
+        .tab-content { padding: 20px; }
+        .fab-container { right: 15px; bottom: 15px; }
+        .fab { font-size: 0.85rem; padding: 8px 12px; min-width: 100px; height: 36px; gap: 5px; }
+        .notification { font-size: 0.85rem; padding: 10px 15px; right: 15px; bottom: 150px; }
+        #generate-image-btn, #tweet-btn, .nav-button, #reviewButton { font-size: 0.9rem; padding: 8px 16px; }
+        .check-actions { gap: 10px; }
+        .review-section-title { font-size: 1.2rem; }
+        .review-content { font-size: 0.9rem; }
+    }
+    @media (max-width: 480px) {
+        .header h1 { font-size: 1.6rem; }
+        .tab-button { font-size: 0.85rem; padding: 8px 12px; }
+        .fab { font-size: 0.8rem; min-width: 40px; width: 40px; height: 40px; border-radius: 50%; padding: 0; }
+        .fab span { display: none; }
+        .notification { width: calc(100% - 30px); left: 15px; right: 15px; text-align: center; bottom: 170px; }
+        .check-actions button span { /* display: none; */ }
+    }
+    /* (基本スタイル - 省略) */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Zen Maru Gothic', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding: 20px; padding-bottom: 100px; scroll-behavior: smooth; min-height: 100vh; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 30px; }
+    .header h1 { font-size: 2.2rem; color: var(--text-color); margin-bottom: 10px; }
+    .header p { font-size: 1.1rem; color: var(--text-color); opacity: 0.8; max-width: 600px; margin: 0 auto; }
+    .storage-note { background-color: rgba(245, 170, 192, 0.1); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; margin: 20px auto; max-width: 800px; font-size: 0.9rem; color: var(--text-color); text-align: center; display: none; }
+    .storage-note p { margin: 5px 0; }
+    .tabs-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 30px; }
+    .tab-button { -webkit-appearance: none; -moz-appearance: none; appearance: none; padding: 12px 20px; background-color: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color); border-radius: 30px; font-family: 'Zen Maru Gothic', sans-serif; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 5px var(--shadow-color); display: flex; align-items: center; gap: 6px; touch-action: manipulation; }
+    .tab-button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px var(--shadow-color); }
+    .tab-button.active { background-color: var(--accent-color); color: white; box-shadow: 0 4px 10px var(--shadow-color); transform: translateY(0); }
+    .tab-content { background-color: var(--card-bg); border-radius: 20px; padding: 30px; box-shadow: 0 8px 20px var(--shadow-color); margin-bottom: 40px; min-height: 60vh; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn 0.4s ease-out forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .section-title { font-size: 1.8rem; color: var(--text-color); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+    .section-description { font-size: 1rem; color: var(--text-color); opacity: 0.8; margin-bottom: 25px; max-width: 700px; }
+    .asis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .card { background-color: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: 0 4px 8px var(--shadow-color); transition: all 0.3s ease; border: 1px solid var(--border-color); height: 100%; display: flex; flex-direction: column; margin-bottom: 20px; /* Add margin for spacing in capture */ }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px var(--shadow-color); }
+    .tobe-card { background-color: var(--center-bg); border-color: var(--accent-color); }
+    .card-title { font-size: 1.2rem; font-weight: 500; margin-bottom: 8px; color: var(--text-color); }
+    .card-subtitle { font-size: 0.95rem; color: var(--text-color); opacity: 0.8; margin-bottom: 15px; }
+    textarea { width: 100%; min-height: 150px; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; font-family: 'Zen Maru Gothic', sans-serif; resize: vertical; color: #555; font-size: 0.95rem; transition: all 0.3s ease; flex-grow: 1; }
+    textarea:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 3px var(--shadow-color); }
+    .tab-navigation { display: flex; justify-content: space-between; margin-top: 30px; }
+    .nav-button { -webkit-appearance: none; -moz-appearance: none; appearance: none; padding: 10px 20px; background-color: var(--blue-accent); color: white; border: none; border-radius: 30px; font-family: 'Zen Maru Gothic', sans-serif; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 8px rgba(125, 185, 238, 0.3); transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; touch-action: manipulation; }
+    .nav-button:hover { background-color: #6baae0; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(125, 185, 238, 0.4); }
+    .nav-button.prev { background-color: #aaa; box-shadow: 0 4px 8px rgba(170, 170, 170, 0.3); }
+    .nav-button.prev:hover { background-color: #888; box-shadow: 0 6px 12px rgba(136, 136, 136, 0.4); }
+    .nav-button.invisible { visibility: hidden; }
+    .progress-container { margin: 0 auto 30px; width: 100%; max-width: 800px; }
+    .progress-bar { width: 100%; height: 8px; background-color: rgba(245, 170, 192, 0.2); border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; background-color: var(--accent-color); width: 0%; transition: width 0.5s ease; }
+    .progress-labels { display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; color: var(--text-color); opacity: 0.8; }
+    .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+    .fab { -webkit-appearance: none; -moz-appearance: none; appearance: none; padding: 10px 15px; color: white; border: none; border-radius: 30px; font-family: 'Zen Maru Gothic', sans-serif; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.3s ease; width: auto; min-width: 120px; height: 40px; text-align: center; touch-action: manipulation; }
+    .fab:hover { transform: translateY(-2px) scale(1.05); }
+    .save-button-local { background-color: var(--accent-color); box-shadow: 0 4px 10px var(--shadow-color); }
+    .save-button-local:hover { box-shadow: 0 6px 12px var(--shadow-color); }
+    .download-button { background-color: var(--blue-accent); box-shadow: 0 4px 10px rgba(125, 185, 238, 0.3); }
+    .download-button:hover { box-shadow: 0 6px 12px rgba(125, 185, 238, 0.4); }
+    .upload-button { background-color: var(--green-accent); box-shadow: 0 4px 10px var(--green-shadow); }
+    .upload-button:hover { box-shadow: 0 6px 12px var(--green-shadow); }
+    #fileInput { display: none; }
+    .notification { position: fixed; bottom: 150px; right: 20px; background-color: var(--accent-color); color: white; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; box-shadow: 0 4px 10px var(--shadow-color); transform: translateY(150px); opacity: 0; transition: transform 0.4s ease-out, opacity 0.4s ease-out; z-index: 99; pointer-events: none; }
+    .notification.upload-success { background-color: var(--green-accent); color: #333; box-shadow: 0 4px 10px var(--green-shadow); }
+    .notification.error { background-color: var(--error-color); box-shadow: 0 4px 10px rgba(238, 125, 125, 0.3); }
+    .notification.show { transform: translateY(0); opacity: 1; }
+    .check-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 2rem; margin-bottom: 1.5rem; }
+    .check-actions button { padding: 10px 20px; color: white; border: none; border-radius: 30px; font-family: 'Zen Maru Gothic', sans-serif; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; }
+    .check-actions button:hover { transform: translateY(-2px); }
+    #generate-image-btn { background-color: var(--blue-accent); box-shadow: 0 4px 8px rgba(125, 185, 238, 0.3); }
+    #generate-image-btn:hover { background-color: #6baae0; box-shadow: 0 6px 12px rgba(125, 185, 238, 0.4); }
+    #generate-image-btn:disabled { background-color: #aaa; cursor: not-allowed; transform: none; box-shadow: none; }
+    #reviewButton { background-color: var(--green-accent); color: #333; box-shadow: 0 4px 8px var(--green-shadow); }
+    #reviewButton:hover { background-color: #6bcdac; box-shadow: 0 6px 12px var(--green-shadow); }
+    #review-summary-container { display: none; margin-top: 2rem; padding: 25px; background-color: var(--review-bg); border: 1px solid var(--review-border); border-radius: 15px; box-shadow: 0 4px 10px rgba(251, 220, 142, 0.2); color: #555; }
+    .review-section { margin-bottom: 20px; } .review-section:last-child { margin-bottom: 0; }
+    .review-section-title { font-size: 1.3rem; font-weight: 500; color: var(--text-color); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px dashed var(--accent-color); display: flex; align-items: center; gap: 8px; }
+    .review-content { font-size: 0.95rem; line-height: 1.7; white-space: pre-wrap; word-wrap: break-word; background-color: rgba(255, 255, 255, 0.5); padding: 10px; border-radius: 8px; border: 1px solid rgba(238, 125, 155, 0.1); }
+    .review-content.asis-item { margin-bottom: 10px; border-left: 3px solid var(--accent-color); padding-left: 15px; }
+    .review-content.asis-item strong { display: block; font-weight: 500; margin-bottom: 5px; color: var(--text-color); opacity: 0.9; }
+    #review-image-container { display: none; text-align: center; margin-top: 1.5rem; background-color: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    #review-image { max-width: 100%; border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 1rem; }
+    #review-image-container p { font-size: 0.9rem; margin-top: 1rem; color: var(--text-color); opacity: 0.9; line-height: 1.5; }
+    #tweet-btn { display: inline-block; margin-top: 1rem; padding: 10px 20px; background-color: #1DA1F2; color: white; border-radius: 30px; text-decoration: none; font-size: 1rem; font-family: 'Zen Maru Gothic', sans-serif; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(29, 161, 242, 0.3); }
+    #tweet-btn:hover { background-color: #0c85d0; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(29, 161, 242, 0.4); }
+
+    /* Styles for the temporary capture container */
+    #capture-temp-container {
+        /* Ensure it doesn't inherit unwanted styles */
+        all: initial;
+        /* Apply necessary base styles */
+        font-family: 'Zen Maru Gothic', sans-serif;
+        color: var(--text-color);
+        line-height: 1.6;
+        box-sizing: border-box; /* Apply box-sizing */
+
+        /* Layout styles */
+        position: absolute;
+        left: -9999px; /* Position off-screen */
+        top: 0;
+        width: 800px; /* Fixed width for consistent image size */
+        padding: 30px;
+        background-color: var(--card-bg); /* Use tab content background */
+        border-radius: 20px;
+        box-shadow: 0 8px 20px var(--shadow-color);
+        overflow: hidden; /* Prevent content overflow issues */
+    }
+    /* Apply styles for elements inside the temporary container */
+    #capture-temp-container * {
+         box-sizing: border-box; /* Ensure box-sizing is inherited */
+    }
+    #capture-temp-container .section-title,
+    #capture-temp-container .section-description,
+    #capture-temp-container .card,
+    #capture-temp-container .card-title,
+    #capture-temp-container .card-subtitle,
+    #capture-temp-container .review-summary-container, /* Style the cloned review container if needed */
+    #capture-temp-container .review-section,
+    #capture-temp-container .review-section-title,
+    #capture-temp-container .review-content,
+    #capture-temp-container textarea /* Apply textarea styles for KPT card */
+    {
+        /* Re-apply specific styles needed for capture, potentially inheriting less */
+        font-family: inherit; /* Inherit from container */
+        color: inherit; /* Inherit from container (or set specific) */
+        /* Add other necessary styles like margin, padding, borders */
+    }
+    /* Replicate card styles */
+    #capture-temp-container .card {
+      background-color: var(--card-bg); border-radius: 15px; padding: 20px; box-shadow: 0 4px 8px var(--shadow-color); border: 1px solid var(--border-color); margin-bottom: 25px; /* Spacing */ display: flex; flex-direction: column;
+    }
+    #capture-temp-container .card-title { font-size: 1.2rem; font-weight: 500; margin-bottom: 8px; color: var(--text-color); }
+    #capture-temp-container .card-subtitle { font-size: 0.95rem; color: var(--text-color); opacity: 0.8; margin-bottom: 15px; }
+     #capture-temp-container textarea {
+        width: 100%; min-height: 150px; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; resize: none; color: #555; font-size: 0.95rem; flex-grow: 1; background-color: #fff; /* Ensure background */ overflow-wrap: break-word; white-space: pre-wrap;
+     }
+    /* Replicate review summary styles */
+    #capture-temp-container .review-summary-container-clone {
+         margin-top: 30px; padding: 25px; background-color: var(--review-bg); border: 1px solid var(--review-border); border-radius: 15px; box-shadow: 0 4px 10px rgba(251, 220, 142, 0.2); color: #555;
+    }
+     #capture-temp-container .review-section { margin-bottom: 20px; } #capture-temp-container .review-section:last-child { margin-bottom: 0; }
+     #capture-temp-container .review-section-title { font-size: 1.3rem; font-weight: 500; color: var(--text-color); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px dashed var(--accent-color); display: flex; align-items: center; gap: 8px; }
+     #capture-temp-container .review-content { font-size: 0.95rem; line-height: 1.7; white-space: pre-wrap; word-wrap: break-word; background-color: rgba(255, 255, 255, 0.5); padding: 10px; border-radius: 8px; border: 1px solid rgba(238, 125, 155, 0.1); }
+     #capture-temp-container .review-content.asis-item { margin-bottom: 10px; border-left: 3px solid var(--accent-color); padding-left: 15px; }
+     #capture-temp-container .review-content.asis-item strong { display: block; font-weight: 500; margin-bottom: 5px; color: var(--text-color); opacity: 0.9; }
+
+
+    /* Responsive Styles */
+    @media (max-width: 768px) { /* ... (abbreviated) ... */
+        body { padding: 15px; padding-bottom: 120px; } .header h1 { font-size: 1.8rem; } .header p { font-size: 1rem; } .asis-grid { grid-template-columns: 1fr; } .section-title { font-size: 1.5rem; } .tab-button { font-size: 0.9rem; padding: 10px 15px; } .tab-content { padding: 20px; } .fab-container { right: 15px; bottom: 15px; } .fab { font-size: 0.85rem; padding: 8px 12px; min-width: 100px; height: 36px; gap: 5px; } .notification { font-size: 0.85rem; padding: 10px 15px; right: 15px; bottom: 150px; } #generate-image-btn, #tweet-btn, .nav-button, #reviewButton { font-size: 0.9rem; padding: 8px 16px; } .check-actions { gap: 10px; } .review-section-title { font-size: 1.2rem; } .review-content { font-size: 0.9rem; }
+        /* Adjust capture width for smaller screens if needed */
+        #capture-temp-container { width: 90%; padding: 20px; }
+    }
+    @media (max-width: 480px) { /* ... (abbreviated) ... */
+        .header h1 { font-size: 1.6rem; } .tab-button { font-size: 0.85rem; padding: 8px 12px; } .fab { font-size: 0.8rem; min-width: 40px; width: 40px; height: 40px; border-radius: 50%; padding: 0; } .fab span { display: none; } .notification { width: calc(100% - 30px); left: 15px; right: 15px; text-align: center; bottom: 170px; } .check-actions button span { /* display: none; */ }
+    }
 </style>
 </head>
 <body>
@@ -581,7 +759,7 @@
 
         <!-- RULE Tab -->
         <div class="tab-panel" id="rule-panel">
-            <h2 class="section-title">❌ RULE（やらないこと・避けたい方向）</h2>
+             <h2 class="section-title">❌ RULE（やらないこと・避けたい方向）</h2>
             <p class="section-description">自分を守るための境界線を設定しましょう。「もうこれはやらない」と決めることで、効率的に前に進めます。</p>
             <div class="card">
                 <h3 class="card-title">自分を守る設計</h3>
@@ -596,7 +774,7 @@
 
         <!-- PERK Tab -->
         <div class="tab-panel" id="perk-panel">
-            <h2 class="section-title">🧰 PERK（使える装備）</h2>
+             <h2 class="section-title">🧰 PERK（使える装備）</h2>
             <p class="section-description">今の自分が持つ強みやリソースを見つめましょう。既に手に入れたスキルや経験、人脈も大切な装備です。</p>
             <div class="card">
                 <h3 class="card-title">自分の装備を見つめる</h3>
@@ -611,7 +789,7 @@
 
         <!-- ACTION Tab -->
         <div class="tab-panel" id="action-panel">
-            <h2 class="section-title">🛠 ACTION（手段・行動）</h2>
+             <h2 class="section-title">🛠 ACTION（手段・行動）</h2>
             <p class="section-description">理想に近づくための具体的な一歩を設計しましょう。TO-BEに近づくために、今の自分にできることは何でしょう？</p>
             <div class="card">
                 <h3 class="card-title">次の一手を考える</h3>
@@ -634,33 +812,49 @@
                 <textarea data-section="check" id="check-input" placeholder="よかったこと(Keep)／改善点(Problem)／次にやってみること(Try)"></textarea>
             </div>
 
-            <div style="text-align:center; margin-top:2rem;">
-                <button id="generate-image-btn">この記録を画像にする</button>
+            <!-- Action Buttons Area -->
+            <div class="check-actions">
+                <button id="reviewButton">📝 <span>入力内容をレビュー</span></button>
+                <button id="generate-image-btn">🖼️ <span>レビュー内容を画像化</span></button> <!-- Changed text -->
             </div>
 
+            <!-- Review Summary Container -->
+            <div id="review-summary-container">
+                <!-- Review content will be injected here by JS -->
+            </div>
+
+            <!-- Image Generation Output -->
             <div id="review-image-container">
-                <img alt="のびしろ記録" id="review-image" src=""/>
-                 <p>
-                    📲 <strong>画像を長押しして保存してね！</strong><br/>
-                    💻 PCの方は <strong>右クリック → 名前をつけて画像を保存</strong> でもOK！
-                </p>
+                <img alt="のびしろ記録レビュー" id="review-image" src=""/> <!-- Alt text changed -->
+                 <p id="image-save-instruction">
+                    <!-- Instruction text will be updated by JS -->
+                 </p>
                 <a href="#" id="tweet-btn" target="_blank" rel="noopener noreferrer">
                     ツイートする
                 </a>
             </div>
 
-             <div class="tab-navigation" style="margin-top: 2rem;"> {/* Add margin top here */}
+            <!-- Tab Navigation -->
+             <div class="tab-navigation" style="margin-top: 2rem;">
                 <button class="nav-button prev" data-prev="action">◀ <span>前へ</span></button>
                 <button class="nav-button next restart" data-next="tobe"><span>サイクル再始動</span> 🔄</button>
             </div>
         </div>
     </div>
 
-    <!-- Save Button -->
-    <button class="save-button" id="saveButton">💾 <span>保存</span></button>
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <button class="fab save-button-local" id="saveButtonLocal">💾 <span>保存(ﾛｰｶﾙ)</span></button>
+        <button class="fab download-button" id="downloadButton">💾 <span>DL(ﾌｧｲﾙ)</span></button>
+        <button class="fab upload-button" id="uploadButton">📤 <span>UL(読込)</span></button>
+    </div>
+    <!-- Hidden File Input -->
+    <input type="file" id="fileInput" accept=".json">
 
-    <!-- Save Notification -->
-    <div class="notification" id="saveNotification">保存しました！</div>
+    <!-- Notifications -->
+    <div class="notification" id="saveNotificationLocal">ローカルに保存しました！</div>
+    <div class="notification upload-success" id="uploadNotificationSuccess">ファイルを読み込みました！</div>
+    <div class="notification error" id="uploadNotificationError">ファイルの読み込みに失敗しました。</div>
 
 </div>
 
@@ -671,12 +865,17 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     // --- Element References ---
-    const tabsNav = document.getElementById('tabsNav');
+    const tabsNav = document.getElementById('tabsNav'); /* ... other refs */
     const tabButtons = tabsNav.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
     const textareas = document.querySelectorAll('textarea');
-    const saveButton = document.getElementById('saveButton');
-    const saveNotification = document.getElementById('saveNotification');
+    const saveButtonLocal = document.getElementById('saveButtonLocal');
+    const downloadButton = document.getElementById('downloadButton');
+    const uploadButton = document.getElementById('uploadButton');
+    const fileInput = document.getElementById('fileInput');
+    const saveNotificationLocal = document.getElementById('saveNotificationLocal');
+    const uploadNotificationSuccess = document.getElementById('uploadNotificationSuccess');
+    const uploadNotificationError = document.getElementById('uploadNotificationError');
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
     const storageNote = document.querySelector('.storage-note');
@@ -684,267 +883,254 @@
     const outputContainer = document.getElementById('review-image-container');
     const outputImg = document.getElementById('review-image');
     const tweetBtn = document.getElementById('tweet-btn');
+    const reviewButton = document.getElementById('reviewButton');
+    const reviewSummaryContainer = document.getElementById('review-summary-container');
+    const imageSaveInstruction = document.getElementById('image-save-instruction');
 
     // --- State Variables ---
-    const tabOrder = ['tobe', 'asis', 'rule', 'perk', 'action', 'check'];
+    const tabOrder = ['tobe', 'asis', 'rule', 'perk', 'action', 'check']; /* ... other vars */
+    const reviewSections = {
+        'tobe': { title: '🌈 TO-BE（なりたい姿・理想の状態）', ids: ['tobe-input'] },
+        'asis': { title: '🔍 AS-IS（現状分析）', ids: ['asis-gap', 'asis-challenges', 'asis-emotions', 'asis-constraints', 'asis-past'] },
+        'rule': { title: '❌ RULE（やらないこと・避けたい方向）', ids: ['rule-input'] },
+        'perk': { title: '🧰 PERK（使える装備）', ids: ['perk-input'] },
+        'action': { title: '🛠 ACTION（手段・行動）', ids: ['action-input'] },
+    };
     let currentTabIndex = 0;
     let isLocalStorageAvailable = true;
-    let saveTimeout; // For notification timer
+    let notificationTimeout;
+
+    // --- Helper Functions ---
+    function getLocalStorageKey(textareaElement) { /* ... (same as before) ... */
+        const section = textareaElement.dataset.section; const id = textareaElement.id; if (section && id) return `arumi_${section}_${id}`; console.warn('Missing data-section or id:', textareaElement); return null;
+    }
+    function showNotification(element, duration = 2000) { /* ... (same as before) ... */
+        if (notificationTimeout) clearTimeout(notificationTimeout); [saveNotificationLocal, uploadNotificationSuccess, uploadNotificationError].forEach(el => el.classList.remove('show')); element.classList.add('show'); notificationTimeout = setTimeout(() => element.classList.remove('show'), duration);
+    }
 
     // --- LocalStorage Functions ---
-    function checkLocalStorage() {
-      try {
-        const testKey = '__arumi_test__';
-        localStorage.setItem(testKey, testKey);
-        localStorage.removeItem(testKey);
-        isLocalStorageAvailable = true;
-        storageNote.style.display = 'none';
-        console.info('LocalStorage is available.');
-      } catch (e) {
-        isLocalStorageAvailable = false;
-        storageNote.style.display = 'block';
-        console.warn('LocalStorage is not available. Data will not be saved across sessions.');
-        // Optionally disable save button if storage is crucial
-        // if (saveButton) saveButton.disabled = true;
-      }
+    function checkLocalStorage() { /* ... (same as before) ... */
+        try { localStorage.setItem('__arumi_test__', '__test__'); localStorage.removeItem('__arumi_test__'); isLocalStorageAvailable = true; storageNote.style.display = 'none'; console.info('LocalStorage available.'); }
+        catch (e) { isLocalStorageAvailable = false; storageNote.style.display = 'block'; console.warn('LocalStorage unavailable.'); if (saveButtonLocal) { saveButtonLocal.disabled = true; saveButtonLocal.style.opacity = 0.5; saveButtonLocal.style.cursor = 'not-allowed'; }}
+    }
+    function saveInputsToLocal() { /* ... (same as before) ... */
+        if (!isLocalStorageAvailable) return false; let changed = false; textareas.forEach(ta => { const key = getLocalStorageKey(ta); if (key) { const current = localStorage.getItem(key); if (current !== ta.value) { localStorage.setItem(key, ta.value); changed = true; } } }); if (changed) console.log('Inputs saved to localStorage.'); return changed;
+    }
+    function restoreInputsFromLocal() { /* ... (same as before) ... */
+        if (!isLocalStorageAvailable) return; textareas.forEach(ta => { const key = getLocalStorageKey(ta); if (key) { const saved = localStorage.getItem(key); if (saved !== null) ta.value = saved; } }); console.log('Inputs restored from localStorage.');
     }
 
-    function getLocalStorageKey(textareaElement) {
-        const section = textareaElement.dataset.section;
-        const id = textareaElement.id;
-        if (section && id) {
-            return `arumi_${section}_${id}`;
-        }
-        console.warn('Textarea missing data-section or id:', textareaElement);
-        return null;
+    // --- File Download/Upload Functions ---
+    function getAllInputsData() { /* ... (same as before) ... */
+        const data = {}; textareas.forEach(ta => { const key = getLocalStorageKey(ta); if (key) data[key] = ta.value; }); return data;
     }
-
-    function saveInputs() {
-      if (!isLocalStorageAvailable) return;
-      let changed = false;
-      textareas.forEach(ta => {
-        const key = getLocalStorageKey(ta);
-        if (key) {
-          const currentValue = localStorage.getItem(key);
-          if (currentValue !== ta.value) {
-              localStorage.setItem(key, ta.value);
-              changed = true;
-          }
-        }
-      });
-      // Only log if something actually changed to reduce console noise
-      if (changed) {
-          console.log('Inputs saved to localStorage.');
-      }
-      return changed; // Return whether any data was actually saved
+    function downloadDataAsFile() { /* ... (same as before) ... */
+        const data = getAllInputsData(); const jsonData = JSON.stringify(data, null, 2); const blob = new Blob([jsonData], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-'); a.download = `nobishiro_cycle_data_${ts}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); console.log('Data downloaded.');
     }
-
-    function restoreInputs() {
-      if (!isLocalStorageAvailable) return;
-      textareas.forEach(ta => {
-        const key = getLocalStorageKey(ta);
-        if (key) {
-          const savedValue = localStorage.getItem(key);
-          if (savedValue !== null) {
-            ta.value = savedValue;
-          }
-        }
-      });
-      console.log('Inputs restored from localStorage.');
+    function restoreInputsFromFileData(data) { /* ... (same as before) ... */
+        let count = 0; textareas.forEach(ta => { const key = getLocalStorageKey(ta); if (key && data.hasOwnProperty(key)) { ta.value = data[key]; count++; } }); console.log(`Restored ${count} inputs from file.`); saveInputsToLocal();
+    }
+    function handleFileUpload(event) { /* ... (same as before) ... */
+        const file = event.target.files[0]; if (!file) return; if (file.type !== 'application/json') { showNotification(uploadNotificationError, 3000); uploadNotificationError.textContent = 'JSONファイルを選択してください。'; fileInput.value = ''; return; } const reader = new FileReader(); reader.onload = (e) => { try { const data = JSON.parse(e.target.result); restoreInputsFromFileData(data); showNotification(uploadNotificationSuccess, 2000); uploadNotificationSuccess.textContent = 'ファイルを読み込みました！'; } catch (error) { console.error('File parse error:', error); showNotification(uploadNotificationError, 3000); uploadNotificationError.textContent = 'ファイルの形式が正しくありません。'; } finally { fileInput.value = ''; } }; reader.onerror = () => { console.error('File read error'); showNotification(uploadNotificationError, 3000); uploadNotificationError.textContent = 'ファイルの読み込み中にエラーが発生しました。'; fileInput.value = ''; }; reader.readAsText(file);
     }
 
     // --- UI Update Functions ---
-    function updateProgress() {
-      const progress = ((currentTabIndex + 1) / tabOrder.length) * 100;
-      progressBar.style.width = `${progress}%`;
-      progressText.textContent = `${Math.round(progress)}%`;
+    function updateProgress() { /* ... (same as before) ... */
+        const progress = ((currentTabIndex + 1) / tabOrder.length) * 100; progressBar.style.width = `${progress}%`; progressText.textContent = `${Math.round(progress)}%`;
     }
 
-    function showTab(tabId) {
-      const targetIndex = tabOrder.indexOf(tabId);
-      if (targetIndex === -1) {
-          console.error(`Tab ID "${tabId}" not found in tabOrder.`);
-          return; // Exit if tabId is invalid
-      }
+    function showTab(tabId) { /* ... (modified) ... */
+      const targetIndex = tabOrder.indexOf(tabId); if (targetIndex === -1) { console.error(`Tab ID "${tabId}" not found.`); return; } currentTabIndex = targetIndex;
+      tabButtons.forEach((button, index) => button.classList.toggle('active', index === currentTabIndex));
+      tabPanels.forEach((panel, index) => { const panelId = tabOrder[index]; if (panel.id === `${panelId}-panel`) panel.classList.toggle('active', index === currentTabIndex); });
+      updateProgress(); outputContainer.style.display = "none"; outputImg.src = ""; reviewSummaryContainer.style.display = "none"; generateBtn.textContent = '🖼️ レビュー内容を画像化'; generateBtn.disabled = false;
+    }
 
-      currentTabIndex = targetIndex;
+    // --- Review Summary Function ---
+    function displayReviewSummary() { /* ... (modified for robustness) ... */
+        saveInputsToLocal(); // Save current state before reviewing
+        let summaryHTML = ''; let hasContent = false;
 
-      // Update Tab Buttons
-      tabButtons.forEach((button, index) => {
-        if (index === currentTabIndex) {
-          button.classList.add('active');
-        } else {
-          button.classList.remove('active');
-        }
-      });
+        for (const sectionKey in reviewSections) {
+            if (!reviewSections.hasOwnProperty(sectionKey)) continue; // Ensure own properties
 
-      // Update Tab Panels
-      tabPanels.forEach((panel, index) => {
-         const panelId = tabOrder[index];
-         if (panel.id === `${panelId}-panel`) {
-            if (index === currentTabIndex) {
-                panel.classList.add('active');
+            const sectionInfo = reviewSections[sectionKey];
+            let sectionContentHTML = '';
+            let sectionHasContent = false;
+
+            if (sectionKey === 'asis') {
+                // Special handling for multiple AS-IS textareas
+                sectionInfo.ids.forEach(id => {
+                    const textarea = document.getElementById(id);
+                    const card = textarea ? textarea.closest('.card') : null;
+                    // Use card title as a fallback if subtitle is missing
+                    const subtitle = card ? (card.querySelector('.card-subtitle')?.textContent || card.querySelector('.card-title')?.textContent || '') : '';
+                    const value = textarea ? textarea.value.trim() : '';
+                    if (value) { // Only show if there's content
+                        sectionContentHTML += `<div class="review-content asis-item">`;
+                        sectionContentHTML += `<strong>${subtitle.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</strong>`; // Add subtitle
+                        sectionContentHTML += `${value.replace(/</g, "&lt;").replace(/>/g, "&gt;")}`; // Basic escaping
+                        sectionContentHTML += `</div>`;
+                        sectionHasContent = true;
+                    }
+                });
+                 if (!sectionHasContent) {
+                     sectionContentHTML += `<div class="review-content">（未入力）</div>`;
+                 }
+
             } else {
-                panel.classList.remove('active');
+                // Handling for single textarea sections
+                const textarea = document.getElementById(sectionInfo.ids[0]);
+                const value = textarea ? textarea.value.trim() : '';
+                 sectionContentHTML += `<pre class="review-content">${value ? value.replace(/</g, "&lt;").replace(/>/g, "&gt;") : '（未入力）'}</pre>`;
+                 if (value) sectionHasContent = true;
             }
-         }
-      });
 
-      // Update Progress Bar
-      updateProgress();
+            // Only add the section if it has content OR it's a mandatory section (e.g., TO-BE)
+            // For simplicity, we'll show all sections for now, even if empty.
+             summaryHTML += `<div class="review-section">`;
+             summaryHTML += `<h4 class="review-section-title">${sectionInfo.title}</h4>`;
+             summaryHTML += sectionContentHTML;
+             summaryHTML += `</div>`;
+             if (sectionHasContent) hasContent = true; // Mark that at least one section has content
+        }
 
-      // Hide image generation area when switching tabs
-      outputContainer.style.display = "none";
-      outputImg.src = "";
-      generateBtn.textContent = 'この記録を画像にする'; // Reset button text
+        reviewSummaryContainer.innerHTML = summaryHTML;
+        reviewSummaryContainer.style.display = 'block';
+        outputContainer.style.display = "none"; // Hide image if shown
+
+        // Scroll to the review section
+        reviewSummaryContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log('Review summary displayed.');
     }
 
-    function showSaveNotification() {
-        saveNotification.classList.add('show');
-        // Clear previous timer if it exists
-        if (saveTimeout) clearTimeout(saveTimeout);
-        // Set new timer to hide notification
-        saveTimeout = setTimeout(() => {
-          saveNotification.classList.remove('show');
-        }, 2000); // Show for 2 seconds
-    }
 
     // --- Event Listeners ---
 
     // Tab Button Clicks
-    tabButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const tabId = button.dataset.tab;
-        if (tabId) {
-            showTab(tabId);
-        } else {
-            console.error('Tab button missing data-tab attribute:', button);
-        }
-      });
-    });
+    tabButtons.forEach(button => button.addEventListener('click', () => { const id = button.dataset.tab; if (id) showTab(id); }));
 
     // Navigation Button Clicks (Next/Prev)
-    document.querySelectorAll('.nav-button').forEach(button => {
-      button.addEventListener('click', () => {
-        let nextTabId = null;
-        const isNext = button.classList.contains('next');
-        const isPrev = button.classList.contains('prev');
-        const isRestart = button.classList.contains('restart');
-
-        if (isNext && !isRestart) {
-          if (currentTabIndex < tabOrder.length - 1) {
-            nextTabId = tabOrder[currentTabIndex + 1];
-          }
-        } else if (isPrev) {
-          if (currentTabIndex > 0) {
-            nextTabId = tabOrder[currentTabIndex - 1];
-          }
-        } else if (isRestart) {
-            nextTabId = tabOrder[0]; // Go to the first tab
-        }
-
-        if (nextTabId) {
-          showTab(nextTabId);
-          // Scroll to the top of the container smoothly
-          const containerTop = document.querySelector('.container').offsetTop;
-           window.scrollTo({ top: containerTop - 20, behavior: 'smooth' }); // Offset by 20px
-        }
-      });
+    document.querySelectorAll('.nav-button').forEach(button => { /* ... (same as before) ... */
+        button.addEventListener('click', () => { let nextTabId = null; const isNext = button.classList.contains('next'); const isPrev = button.classList.contains('prev'); const isRestart = button.classList.contains('restart'); if (isNext && !isRestart && currentTabIndex < tabOrder.length - 1) nextTabId = tabOrder[currentTabIndex + 1]; else if (isPrev && currentTabIndex > 0) nextTabId = tabOrder[currentTabIndex - 1]; else if (isRestart) nextTabId = tabOrder[0]; if (nextTabId) { showTab(nextTabId); const ct = document.querySelector('.container').offsetTop; window.scrollTo({ top: ct - 20, behavior: 'smooth' }); } });
     });
 
-    // Save Button Click
-    if (saveButton) {
-      saveButton.addEventListener('click', () => {
-        const saved = saveInputs(); // Save current inputs
-        if (saved && isLocalStorageAvailable) { // Only show notification if something was saved and storage works
-             showSaveNotification();
-        } else if (!isLocalStorageAvailable) {
-            alert('ローカルストレージが利用できないため、保存できませんでした。');
-        }
-        // No notification if nothing changed
-      });
-    } else {
-        console.error('Save button element not found.');
-    }
+    // Local Save Button Click
+    if (saveButtonLocal) saveButtonLocal.addEventListener('click', () => { if (isLocalStorageAvailable && saveInputsToLocal()) showNotification(saveNotificationLocal, 2000); });
+    // Download Button Click
+    if (downloadButton) downloadButton.addEventListener('click', downloadDataAsFile);
+    // Upload Button Click -> Trigger File Input
+    if (uploadButton && fileInput) uploadButton.addEventListener('click', () => fileInput.click());
+    // File Input Change (File Selected)
+    if (fileInput) fileInput.addEventListener('change', handleFileUpload);
 
     // Textarea Auto-save on Input (throttled)
-    let debounceTimer;
-    textareas.forEach(ta => {
-        ta.addEventListener('input', () => {
-            clearTimeout(debounceTimer);
-            // Save after 500ms of inactivity
-            debounceTimer = setTimeout(() => {
-                saveInputs();
-            }, 500);
-        });
-    });
+    let debounceTimer; textareas.forEach(ta => ta.addEventListener('input', () => { clearTimeout(debounceTimer); debounceTimer = setTimeout(saveInputsToLocal, 500); }));
 
-    // Generate Image Button Click
+    // Review Button Click
+    if (reviewButton) reviewButton.addEventListener('click', displayReviewSummary);
+
+    // Generate Image Button Click (Captures specific elements)
     if (generateBtn) {
         generateBtn.addEventListener('click', () => {
-            // Ensure latest content is saved before generating image
-            saveInputs();
-
-            const currentActivePanel = document.querySelector('.tab-panel.active');
-
-            if (currentActivePanel && html2canvas) {
-                 // Show a temporary loading state? (Optional)
-                 generateBtn.textContent = '画像生成中...';
-                 generateBtn.disabled = true;
-
-                 // html2canvas options
-                 const options = {
-                    scale: window.devicePixelRatio || 2, // Use device pixel ratio for sharpness
-                    useCORS: true, // Allow cross-origin images (if any)
-                    backgroundColor: getComputedStyle(currentActivePanel).backgroundColor || '#ffffff', // Use panel background
-                    logging: false // Disable html2canvas console logs
-                 };
-
-                 // Delay slightly to allow UI update (loading state)
-                 setTimeout(() => {
-                     html2canvas(currentActivePanel, options).then(canvas => {
-                        const dataURL = canvas.toDataURL("image/png");
-                        outputImg.src = dataURL;
-                        outputContainer.style.display = "block"; // Show container
-
-                        // Prepare Tweet button
-                        const tweetText = "あるみ式のびしろサイクルで自己分析したよ！ #あるみ式のびしろサイクル";
-                        // Note: Twitter intent URLs don't directly support image uploads via URL.
-                        // Users need to save the image and upload manually.
-                        tweetBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-
-                        // Scroll to the generated image
-                        outputContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-                        // Restore button state
-                        generateBtn.textContent = '画像を再生成';
-                        generateBtn.disabled = false;
-
-                     }).catch(error => {
-                        console.error('html2canvas failed:', error);
-                        alert('画像の生成に失敗しました。コンソールで詳細を確認してください。');
-                        // Restore button state on error
-                        generateBtn.textContent = '画像生成再試行';
-                        generateBtn.disabled = false;
-                     });
-                 }, 50); // 50ms delay
-
-            } else {
-                 if (!currentActivePanel) alert('画像生成の対象となるアクティブなタブが見つかりません。');
-                 if (!html2canvas) alert('画像生成ライブラリ(html2canvas)が読み込めていません。');
-                 // Restore button state if prerequisites fail
-                 generateBtn.textContent = '画像にする';
-                 generateBtn.disabled = false;
+            // 1. Check if review is displayed
+            if (reviewSummaryContainer.style.display !== 'block') {
+                alert('先に「入力内容をレビュー」ボタンを押して、レビュー内容を表示してください。');
+                return;
             }
+
+            saveInputsToLocal(); // Save current state
+
+            generateBtn.textContent = '画像生成中...';
+            generateBtn.disabled = true;
+
+            // 2. Create temporary container
+            const tempContainer = document.createElement('div');
+            tempContainer.id = 'capture-temp-container';
+            // Styles are applied via CSS using the ID
+
+            // 3. Clone required elements and append to temp container
+            const checkPanel = document.getElementById('check-panel');
+            const title = checkPanel.querySelector('.section-title');
+            const description = checkPanel.querySelector('.section-description');
+            const kptCard = checkPanel.querySelector('.card'); // KPT card
+
+            if (title) tempContainer.appendChild(title.cloneNode(true));
+            if (description) tempContainer.appendChild(description.cloneNode(true));
+            if (kptCard) {
+                const clonedKptCard = kptCard.cloneNode(true);
+                // Ensure textarea value is visible in the clone (important!)
+                const originalTextarea = kptCard.querySelector('textarea');
+                const clonedTextarea = clonedKptCard.querySelector('textarea');
+                if (originalTextarea && clonedTextarea) {
+                    clonedTextarea.value = originalTextarea.value; // Copy value explicitly
+                    clonedTextarea.style.height = originalTextarea.scrollHeight + 'px'; // Try to set height
+                }
+                 tempContainer.appendChild(clonedKptCard);
+            }
+
+            // Clone the displayed review container
+            const clonedReview = reviewSummaryContainer.cloneNode(true);
+            clonedReview.style.display = 'block'; // Ensure it's visible
+            clonedReview.id = ''; // Avoid duplicate IDs
+            clonedReview.classList.add('review-summary-container-clone'); // Add class for styling in capture
+            tempContainer.appendChild(clonedReview);
+
+            // 4. Append temp container to body (off-screen)
+            document.body.appendChild(tempContainer);
+
+            // 5. html2canvas capture
+             const options = {
+                scale: window.devicePixelRatio || 1.5, // Higher resolution
+                useCORS: true,
+                backgroundColor: null, // Background set on the container CSS
+                logging: false,
+                scrollX: 0, // Reset scroll for the temp container
+                scrollY: 0,
+                windowWidth: tempContainer.scrollWidth, // Use container's width/height
+                windowHeight: tempContainer.scrollHeight
+             };
+
+            setTimeout(() => { // Delay for rendering
+                 html2canvas(tempContainer, options).then(canvas => {
+                     const dataURL = canvas.toDataURL("image/png", 0.95);
+                     outputImg.src = dataURL;
+                     outputContainer.style.display = "block";
+
+                     const tweetText = "あるみ式のびしろサイクルで振り返り＆レビュー！ #あるみ式のびしろサイクル";
+                     tweetBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+
+                     if (imageSaveInstruction) {
+                         imageSaveInstruction.innerHTML = `
+                            （レビュー内容を含む画像）<br/>
+                            📲 <strong>画像を長押しして保存</strong> して、<br/>
+                            ツイートに添付して投稿してね！<br/>
+                            💻 PC: <strong>右クリック → 名前をつけて画像を保存</strong>
+                         `;
+                     }
+
+                     outputContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                     generateBtn.textContent = '🖼️ 画像を再生成';
+
+                 }).catch(error => {
+                     console.error('html2canvas failed:', error);
+                     alert('画像の生成に失敗しました。\n内容が複雑すぎるか、ブラウザの制限に問題がある可能性があります。');
+                     generateBtn.textContent = '🔄 画像生成再試行';
+                 }).finally(() => {
+                     // 6. Remove temp container
+                     document.body.removeChild(tempContainer);
+                     generateBtn.disabled = false;
+                 });
+            }, 150); // Adjust delay if needed
+
         });
-    } else {
-         console.error('Generate image button element not found.');
-    }
+    } else { console.error('Generate image button not found.'); }
+
 
     // --- Initial Setup ---
-    checkLocalStorage(); // Check storage availability first
-    restoreInputs();     // Restore data if available
-    showTab(tabOrder[0]); // Show the initial tab ('tobe')
+    checkLocalStorage();
+    restoreInputsFromLocal();
+    showTab(tabOrder[0]);
 
   });
 </script>
